@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 /**
  * Safely scrapes the HTML content of a given URL using a remote browser service.
  *

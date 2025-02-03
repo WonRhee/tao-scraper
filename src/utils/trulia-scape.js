@@ -2,6 +2,8 @@ import puppeteer from "puppeteer";
 import { ScrapingBrowser, ProxyCountry } from "@zenrows/browser-sdk";
 import axios from "axios";
 import * as cheerio from "cheerio";
+import dotenv from "dotenv";
+dotenv.config();
 const PQueue = (await import("p-queue")).default;
 
 /**
