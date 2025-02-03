@@ -1,51 +1,87 @@
-# Puppeteer Web Scraping Project
+# Tao Digital Solution Web Scraping Exercise
 
-This project demonstrates how to use Puppeteer for web scraping. It includes an entry point that initializes Puppeteer, launches a browser instance, and contains the main scraping logic. The project also includes an Express server to handle web requests and render results.
+This repository contains my code for a web scraping exercise, part of the interview process for the remote Web Scraping Engineer position at Tao Digital Solutions. The primary objective of this exercise is to demonstrate my web scraping skills and knowledge. I’ve had to improvise due to some ambiguities in the exercise instructions. Please don’t hesitate to ask any questions about my decisions and implementations.
 
-## Project Structure
+The service is built using Node.js, Express, Puppeteer, and TypeScript. The application and its API endpoint are deployed and hosted on Azure.
 
-```
-puppeteer-web-scraping
-├── src
-│   ├── index.ts          # Entry point of the application
-│   └── utils
-│       └── helpers.ts    # Utility functions for scraping
-├── package.json          # npm configuration file
-├── tsconfig.json         # TypeScript configuration file
-└── README.md             # Project documentation
-```
+One of the most challenging aspects of this task was circumventing captchas and anti-scraping mechanisms. To minimize detection, I utilized a third-party proxy service provider, ZendRows.
 
-## Installation
+Please note that the code is minimal and does not adhere to many of the best practices that I would typically follow in a production environment. Here’s the basic flow when the `/homes` endpoint receives a request:
 
-1. Clone the repository:
+1.  Parse the `city` and `state` query parameters.
+2.  Launch Puppeteer and navigate directly to `google.com/search?q=`.
+3.  Evaluate and gather href links from only the organic results from Google.
+4.  Check if `trulia.com` is among the results.
+5.  Navigate to the `trulia.com` site.
+6.  Perform a search on the Trulia site using `trulia.com/{stateAbbreviation}/{cityName}`.
+7.  Use the ZendRows external service to bypass anti-scraping mechanisms.
+8.  Navigate from page 1 through 3, and gather home listings (scrolling is flaky).
+9.  Merge the results and return them as a JSON response.
 
-   ```
-   git clone <repository-url>
-   ```
+## Authors
 
-2. Navigate to the project directory:
+- [@wonrhee3](https://www.github.com/wonrhee3) Won J. Rhee
 
-   ```
-   cd puppeteer-web-scraping
-   ```
+## Testing Instructions
 
-3. Install the dependencies:
-   ```
-   npm install
-   ```
+- https://tao-scrape.azurewebsites.net/homes?state=TX&city=houston
 
-## Usage
+Only a single endpoint is of value, Simply send a`GET`request with`state`and`city`as query parameters to`/homes` endpoint.
 
-To run the scraping script, use the following command:
+For example,
 
 ```
-npm start
+GET https://tao-scrape.azurewebsites.net/homes?state=ca&city=anaheim
 ```
 
-## Contributing
+Postman or simply using browser to the above endpoint should work. It may take up to a minute to respond.
 
-Feel free to submit issues or pull requests for improvements or bug fixes.
+Example JSON response:
 
-## License
+```
+{
+    "source": "trulia.com",
+    "results": [
+        {
+            "price": "$949,000",
+            "beds": "3bd",
+            "baths": "2ba",
+            "address": "2844 W  Rowland Cir, \nAnaheim, CA 92804",
+            "link": "https://trulia.com/home/2844-w-rowland-cir-anaheim-ca-92804-25217009"
+        },
+        {
+            "price": "$1,299,000",
+            "beds": "5bd",
+            "baths": "3ba",
+            "address": "9861 Theresa Ave, \nAnaheim, CA 92804",
+            "link": "https://trulia.com/home/9861-theresa-ave-anaheim-ca-92804-25219665"
+        },
+        {
+            "price": "$1,189,900",
+            "beds": "4bd",
+            "baths": "2ba",
+            "address": "7880 E  Samantha Cir, \nAnaheim, CA 92807",
+            "link": "https://trulia.com/home/7880-e-samantha-cir-anaheim-ca-92807-25398651"
+        }
+    ]
+}
+```
 
-This project is licensed under the MIT License.
+## API Reference
+
+#### Hello
+
+```http
+  GET /
+```
+
+#### Search homes
+
+```http
+  GET /homes?city=seattle&state=wa
+```
+
+| Query Parameter | Type     | Description                                                   |
+| :-------------- | :------- | :------------------------------------------------------------ |
+| `city`          | `string` | **Required**. Provide city name to search.                    |
+| `state`         | `string` | **Required**. Provide state name to search (e.g. CA, NY, TX). |
