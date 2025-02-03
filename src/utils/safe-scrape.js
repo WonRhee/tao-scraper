@@ -10,7 +10,7 @@
  */
 const SafeScrape = async (targetUrl) => {
   const endpoint = "https://production-sfo.browserless.io/chromium/bql";
-  const token = "RgZxWR0VbGWhKe6f042798a90c3ae9b8cd5a98afe1";
+  const token = process.env.BROWSERLESS_TOKEN;
   const options = {
     method: "POST",
     headers: {
