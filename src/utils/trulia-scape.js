@@ -170,7 +170,7 @@ export const scrapeTruliaResults = async (state, city) => {
  */
 const processListing = async (listing) => {
   const url = listing.link;
-  const apikey = "057485e18425b59b50a08f7d399e91856be7158c";
+  const apikey = process.env.ZENDROW_API_KEY;
 
   try {
     const response = await axios({
