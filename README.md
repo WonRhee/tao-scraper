@@ -23,14 +23,14 @@ Please note that the code is minimal and does not adhere to many of the best pra
 
 ## Testing Instructions
 
-- https://tao-scrape.azurewebsites.net/homes?state=TX&city=houston
+- https://tao-scraper-307b2e99c916.herokuapp.com/
 
 Only a single endpoint is of value, Simply send a`GET`request with`state`and`city`as query parameters to`/homes` endpoint.
 
 For example,
 
 ```
-GET https://tao-scrape.azurewebsites.net/homes?state=ca&city=anaheim
+POST https://tao-scraper-307b2e99c916.herokuapp.com/scrape-trulia?state=ca&city=anaheim
 ```
 
 Postman or simply using browser to the above endpoint should work. It may take up to a minute to respond.
@@ -68,19 +68,25 @@ Example JSON response:
 
 ## API Reference
 
-#### Hello
+### Get Google Search Results
 
 ```http
-  GET /
+  POST /search-google
 ```
 
-#### Search homes
+**Body Payload**
+| Field | Type | Description |
+| -------- | ------- | ----------|
+| `question` | `string` | **Required**. The search query.
+
+### Search Trulia
 
 ```http
-  GET /homes?city=seattle&state=wa
+  POST /search-trulia
 ```
 
-| Query Parameter | Type     | Description                                                   |
-| :-------------- | :------- | :------------------------------------------------------------ |
-| `city`          | `string` | **Required**. Provide city name to search.                    |
-| `state`         | `string` | **Required**. Provide state name to search (e.g. CA, NY, TX). |
+**Body Payload**
+| Field | Type | Description |
+| -------- | ------- | ----------|
+| `city` | `string` | **Required**. Provide city name to search.
+| `state` | `string` | **Required**. Provide state name to search (e.g. CA, NY, TX).
