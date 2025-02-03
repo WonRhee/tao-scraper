@@ -1,8 +1,8 @@
 import puppeteer from "puppeteer";
+import dotenv from "dotenv";
 import { ScrapingBrowser, ProxyCountry } from "@zenrows/browser-sdk";
 import axios from "axios";
 import * as cheerio from "cheerio";
-import dotenv from "dotenv";
 dotenv.config();
 const PQueue = (await import("p-queue")).default;
 
@@ -15,7 +15,7 @@ const PQueue = (await import("p-queue")).default;
  */
 export const getNewPage = async () => {
   const connectionURL = new ScrapingBrowser({
-    apiKey: process.env.ZENROWS_API_KEY,
+    apiKey: process.env.ZENDROW_API_KEY,
   }).getConnectURL({
     proxy: { location: ProxyCountry.US },
   });
@@ -45,7 +45,7 @@ export const getNewPage = async () => {
 export const scrapeTruliaListingMls = async (truliaListingUrl) => {
   console.log("Scraping MLS source for:", truliaListingUrl);
 
-  const apikey = process.env.ZENROWS_API_KEY;
+  const apikey = process.env.ZENDROW_API_KEY;
 
   try {
     const response = await axios({
