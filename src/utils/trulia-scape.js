@@ -13,7 +13,7 @@ const PQueue = (await import("p-queue")).default;
  */
 export const getNewPage = async () => {
   const connectionURL = new ScrapingBrowser({
-    apiKey: "057485e18425b59b50a08f7d399e91856be7158c",
+    apiKey: process.env.ZENROWS_API_KEY,
   }).getConnectURL({
     proxy: { location: ProxyCountry.US },
   });
@@ -43,7 +43,7 @@ export const getNewPage = async () => {
 export const scrapeTruliaListingMls = async (truliaListingUrl) => {
   console.log("Scraping MLS source for:", truliaListingUrl);
 
-  const apikey = "057485e18425b59b50a08f7d399e91856be7158c";
+  const apikey = process.env.ZENROWS_API_KEY;
 
   try {
     const response = await axios({

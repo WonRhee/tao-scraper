@@ -21,17 +21,11 @@ Please note that the code is minimal and does not adhere to many of the best pra
 
 - [@wonrhee3](https://www.github.com/wonrhee3) Won J. Rhee
 
-## Testing Instructions
+## App URL
 
 - https://tao-scraper-307b2e99c916.herokuapp.com/
 
-Only a single endpoint is of value, Simply send a`GET`request with`state`and`city`as query parameters to`/homes` endpoint.
-
-For example,
-
-```
-POST https://tao-scraper-307b2e99c916.herokuapp.com/scrape-trulia?state=ca&city=anaheim
-```
+## API Reference
 
 Postman or simply using browser to the above endpoint should work. It may take up to a minute to respond.
 
@@ -65,8 +59,6 @@ Example JSON response:
     ]
 }
 ```
-
-## API Reference
 
 ### Get Google Search Results
 
