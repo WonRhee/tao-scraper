@@ -1,16 +1,18 @@
+import dotenv from "dotenv";
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import SafeScrape from "../src/utils/safe-scrape.js";
 import { scrapeTruliaResults } from "../src/utils/trulia-scape.js";
 import * as cheerio from "cheerio";
+dotenv.config();
 
 // Helper function to get the directory name
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 443;
 
 // Set the view engine to EJS
 app.set("view engine", "ejs");

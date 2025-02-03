@@ -2,21 +2,20 @@
 
 This repository contains my code for a web scraping exercise, part of the interview process for the remote Web Scraping Engineer position at Tao Digital Solutions. The primary objective of this exercise is to demonstrate my web scraping skills and knowledge. I’ve had to improvise due to some ambiguities in the exercise instructions. Please don’t hesitate to ask any questions about my decisions and implementations.
 
-The service is built using Node.js, Express, Puppeteer, and TypeScript. The application and its API endpoint are deployed and hosted on Azure.
+The service is built primarily using Node.js, Express, and Puppeteer. The application and its API endpoint are deployed and hosted on Heroku.
 
-One of the most challenging aspects of this task was circumventing captchas and anti-scraping mechanisms. To minimize detection, I utilized a third-party proxy service provider, ZendRows.
+One of the most challenging aspects of this task was circumventing captchas and anti-scraping mechanisms. To minimize detection, I utilized a third-party proxy service providers, Browserless.io and Zendrows.
 
-Please note that the code is minimal and does not adhere to many of the best practices that I would typically follow in a production environment. Here’s the basic flow when the `/homes` endpoint receives a request:
+Please note that the code is minimal and does not adhere to many of the best practices that I would typically follow in a production environment. Here’s the basic flow when the `/scrape-trulia` endpoint receives a POST request:
 
-1.  Parse the `city` and `state` query parameters.
-2.  Launch Puppeteer and navigate directly to `google.com/search?q=`.
-3.  Evaluate and gather href links from only the organic results from Google.
-4.  Check if `trulia.com` is among the results.
-5.  Navigate to the `trulia.com` site.
-6.  Perform a search on the Trulia site using `trulia.com/{stateAbbreviation}/{cityName}`.
-7.  Use the ZendRows external service to bypass anti-scraping mechanisms.
-8.  Navigate from page 1 through 3, and gather home listings (scrolling is flaky).
-9.  Merge the results and return them as a JSON response.
+1. Parse Request Body: The server parses the city and state parameters from the request body.
+2. Invoke Scraping Function: The scrapeTruliaResults function is called with the parsed state and city parameters.
+3. Launch Puppeteer: Inside scrapeTruliaResults, a new Puppeteer browser instance is launched using the getNewPage function.
+4. Navigate to Trulia: Puppeteer navigates to the Trulia website for the specified state and city.
+5. Scroll to Load Listings: The page is scrolled multiple times to ensure all listings are loaded.
+6. Extract Listings: The listings are extracted from the page using Puppeteer's $$eval method.
+7. Scrape MLS Source: For each listing, the scrapeTruliaListingMls function is called to scrape the MLS source information.
+8. Render Results: The results are rendered using the search-trulia.ejs template and sent back as the response.
 
 ## Authors
 
