@@ -4,7 +4,8 @@
   "description": "A web scraping project using Puppeteer.",
   "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "herok-postbuil": "mkdir ./.cache && mv /app/.cache/puppeteer ./.cache"
   },
   "dependencies": {
     "@zenrows/browser-sdk": "^1.1.0",
